@@ -1,13 +1,20 @@
 body {
-    font-family: sans-serif;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
     padding: 40px;
-    background-color: #F5F5F5(0, 49%, 28%);
-    color:#2A6F97;
+    background-color: #F5F5F5;
+    color: #1A1A1A;
     text-align: center;
 }
 
+button {
+    padding: 14px;
+    font-size: 16px;
+}
+
 h1 {
-    color: #502c49;
+    color: #1A1A1A;
 }
 
 .intro {
@@ -23,9 +30,25 @@ button {
     margin: 8px;
     border: none;
     border-radius: 8px;
-    background-color: #db34ba;
-    color: rgb(116, 29, 105);
+    background-color:#70a1bd;
+    color: rgb(0, 5, 7);
     cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+.box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.dark {
+    background-color: #111;
+    color: white;
 }
 
 button:hover {
