@@ -24,8 +24,27 @@ function simplifyText(text) {
 
     let important = sentences.slice(0, 8);
 
+    const keywords = [
+        "important",
+        "people",
+        "help",
+        "use",
+        "need",
+        "problem",
+        "problems",
+        "information",
+        "service",
+        "services",
+        "system",
+        "support",
+        "learning",
+        "reading",
+        "health",
+        "safety"
+    ];
+
     let simplified = important.map(s => {
-        return s
+        let line = s
             .replace(/\[\d+\]/g, "")
             .replace(/utilize/gi, "use")
             .replace(/approximately/gi, "about")
@@ -40,9 +59,16 @@ function simplifyText(text) {
             .replace(/however/gi, "but")
             .replace(/obtain/gi, "get")
             .replace(/require/gi, "need");
+
+        keywords.forEach(word => {
+            const regex = new RegExp(`\\b${word}\\b`, "gi");
+            line = line.replace(regex, match => `<span class="highlight">${match}</span>`);
+        });
+
+        return `<div class="chunk"><li>${line}</li></div>`;
     });
 
-    return "<ul>" + simplified.map(s => `<li>${s}</li>`).join("") + "</ul>";
+    return "<ul>" + simplified.join("") + "</ul>";
 }
 
 // ==============================
@@ -78,6 +104,7 @@ app.post("/process-link", async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
+
         res.status(500).json({
             error: "Error fetching website"
         });
