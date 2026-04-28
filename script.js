@@ -1,27 +1,21 @@
-let size = 16;
+async function processLink() {
+    const url = document.getElementById("urlInput").value;
 
-function increaseFont() {
-    size += 2;
-    document.getElementById("text").style.fontSize = size + "px";
-}
+    try {
+        const response = await fetch("http://localhost:3000/process", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ url })
+        });
 
-function decreaseFont() {
-    size -= 2;
-    document.getElementById("text").style.fontSize = size + "px";
-}
+        const data = await response.json();
 
-function toggleDark() {
-    document.body.classList.toggle("dark");
-}
+        document.getElementById("text").innerText = data.original;
+        document.getElementById("simpleText").innerText = data.simplified;
 
-function readText() {
-    let text = document.getElementById("text").innerText;
-
-    let speech = new SpeechSynthesisUtterance(text);
-    speechSynthesis.speak(speech);
-}
-
-function simplifyText() {
-    document.getElementById("simpleText").innerText =
-    "Government websites are often difficult. EasyWeb makes them simpler to understand.";
+    } catch (err) {
+        alert("Error processing website");
+    }
 }
