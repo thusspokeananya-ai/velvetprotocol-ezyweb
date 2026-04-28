@@ -16,35 +16,39 @@ app.get("/", (req, res) => {
 // SIMPLIFY FUNCTION
 // ==============================
 function simplifyText(text) {
-
     let sentences = text.split(/[.!?]/);
 
     sentences = sentences
         .map(s => s.trim())
         .filter(s => s.length > 50);
 
-    let important = sentences.slice(0, 6);
+    let important = sentences.slice(0, 8);
 
     let simplified = important.map(s => {
         return s
+            .replace(/\[\d+\]/g, "")
             .replace(/utilize/gi, "use")
             .replace(/approximately/gi, "about")
             .replace(/individuals/gi, "people")
             .replace(/numerous/gi, "many")
             .replace(/assistance/gi, "help")
-            .replace(/difficulties/gi, "problems");
+            .replace(/difficulties/gi, "problems")
+            .replace(/comprehension/gi, "understanding")
+            .replace(/demonstrate/gi, "show")
+            .replace(/significant/gi, "important")
+            .replace(/therefore/gi, "so")
+            .replace(/however/gi, "but")
+            .replace(/obtain/gi, "get")
+            .replace(/require/gi, "need");
     });
 
-    // RETURN HTML BULLETS
     return "<ul>" + simplified.map(s => `<li>${s}</li>`).join("") + "</ul>";
 }
-
 
 // ==============================
 // PROCESS LINK
 // ==============================
 app.post("/process-link", async (req, res) => {
-
     const { url } = req.body;
 
     try {
@@ -56,6 +60,8 @@ app.post("/process-link", async (req, res) => {
 
         const html = response.data;
         const $ = cheerio.load(html);
+
+        $("script, style, nav, footer, header").remove();
 
         let text = "";
 
