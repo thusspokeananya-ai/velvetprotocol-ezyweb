@@ -16,8 +16,28 @@
         Helping people with ADHD, autism, and dyslexia read and focus more easily.
     </p>
 
-    <input type="text" id="urlInput" placeholder="Paste any website URL here">
-    <button class="main-btn" onclick="processLink()">Simplify Website</button>
+    <div class="input-choice">
+    <button onclick="showInput('url')">🔗 Website</button>
+    <button onclick="showInput('text')">✍️ Text</button>
+    <button onclick="showInput('image')">🖼️ Image</button>
+</div>
+
+<div id="urlSection" class="input-section">
+    <input type="text" id="urlInput" placeholder="Paste website URL here">
+</div>
+
+<div id="textSection" class="input-section hidden">
+    <textarea id="textInput" placeholder="Paste text here..." rows="5"></textarea>
+</div>
+
+<div id="imageSection" class="input-section hidden">
+    <label for="imageInput" class="upload-icon">
+        🖼️ Upload image with text
+    </label>
+    <input type="file" id="imageInput" accept="image/*" hidden>
+</div>
+
+<button class="main-btn" onclick="processInput()">Simplify</button>
 </div>
 
 <div class="features">
@@ -35,6 +55,7 @@
         <button onclick="decreaseFont()">A-</button>
         <button onclick="readText()">🔊 Read</button>
         <button onclick="stopReading()">⛔ Stop</button>
+        <button onclick="toggleSentenceMode()">Sentence Mode</button>
     </details>
 
     <details>
@@ -48,7 +69,7 @@
         <button onclick="toggleDark()">Dark Mode</button>
         <button onclick="toggleSpacing()">Readable Spacing</button>
         <button onclick="toggleCalmMode()">Calm Mode</button>
-            </details>
+    </details>
 
 </div>
 
@@ -57,6 +78,18 @@
 
 <div class="progress-box">
     <div id="progressBar"></div>
+</div>
+
+<div id="sentenceBox" class="box sentence-box">
+    <h3>Sentence Mode</h3>
+
+    <p id="sentenceText">Your sentence will appear here...</p>
+    <p id="sentenceCounter">Sentence 0 of 0</p>
+
+    <div class="sentence-buttons">
+        <button onclick="prevSentence()">⬅ Previous</button>
+        <button onclick="nextSentence()">Next ➡</button>
+    </div>
 </div>
 
 <div class="box simple-section">
