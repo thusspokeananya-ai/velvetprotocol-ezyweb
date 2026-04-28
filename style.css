@@ -50,19 +50,3 @@ button:hover {
     background-color: #111;
     color: white;
 }
-
-button:hover {
-    background-color: #2980b9;
-}
-
-.box {
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 10px;
-}
-
-.dark {
-    background-color: #111;
-    color: white;
-}
