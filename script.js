@@ -1,30 +1,64 @@
 let currentFontSize = 18;
 let readingRulerOn = false;
 
-async function processLink() {
+let sentences = [];
+let index = 0;
+function showInput(type) {
+    document.getElementById("urlSection").classList.add("hidden");
+    document.getElementById("textSection").classList.add("hidden");
+    document.getElementById("imageSection").classList.add("hidden");
+
+    if (type === "url") {
+        document.getElementById("urlSection").classList.remove("hidden");
+    }
+
+    if (type === "text") {
+        document.getElementById("textSection").classList.remove("hidden");
+    }
+
+    if (type === "image") {
+        document.getElementById("imageSection").classList.remove("hidden");
+    }
+}
+
+async function processInput() {
     const url = document.getElementById("urlInput").value;
+    const text = document.getElementById("textInput").value;
+    const image = document.getElementById("imageInput").files[0];
+
     const loading = document.getElementById("loading");
     const message = document.getElementById("message");
 
-    if (url.trim() === "") {
-        message.innerText = "Please paste a URL first.";
+    if (url.trim() === "" && text.trim() === "" && !image) {
+        message.innerText = "Please enter a URL, paste text, or upload an image.";
         return;
     }
 
-    loading.innerText = "Simplifying...";
+    loading.innerText = "Processing...";
     message.innerText = "";
 
     document.getElementById("simpleText").innerHTML = "";
     document.getElementById("text").innerText = "";
     document.getElementById("progressBar").style.width = "0%";
 
+    const formData = new FormData();
+
+    if (url.trim() !== "") {
+        formData.append("url", url);
+    }
+
+    if (text.trim() !== "") {
+        formData.append("text", text);
+    }
+
+    if (image) {
+        formData.append("image", image);
+    }
+
     try {
-        const response = await fetch("https://your-vercel-project.vercel.app/process-link"), {
+        const response = await fetch("http://localhost:3000/process", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ url })
+            body: formData
         });
 
         const data = await response.json();
@@ -32,12 +66,17 @@ async function processLink() {
         loading.innerText = "";
 
         if (data.error) {
-            message.innerText = "Sorry, this website could not be opened. Please try another link.";
+            message.innerText = "Sorry, the input could not be processed.";
             return;
         }
 
-        document.getElementById("simpleText").innerHTML = data.simplified;
-        document.getElementById("text").innerText = data.text;
+        document.getElementById("simpleText").innerHTML = data.html;
+        document.getElementById("text").innerText = data.text || "";
+
+        sentences = data.sentences || [];
+        index = 0;
+
+        updateSentence();
 
         document.getElementById("progressBar").style.width = "100%";
 
@@ -45,6 +84,50 @@ async function processLink() {
         loading.innerText = "";
         message.innerText = "Backend is not running. Start server.js first.";
         console.log(error);
+    }
+}
+
+function toggleSentenceMode() {
+    const sentenceBox = document.getElementById("sentenceBox");
+    sentenceBox.classList.toggle("active");
+    updateSentence();
+}
+
+function updateSentence() {
+    const sentenceText = document.getElementById("sentenceText");
+    const sentenceCounter = document.getElementById("sentenceCounter");
+
+    if (sentences.length === 0) {
+        sentenceText.innerText = "Your sentence will appear here...";
+        sentenceCounter.innerText = "Sentence 0 of 0";
+        return;
+    }
+
+    sentenceText.innerText = sentences[index];
+    sentenceCounter.innerText = "Sentence " + (index + 1) + " of " + sentences.length;
+}
+
+function nextSentence() {
+    if (sentences.length === 0) {
+        document.getElementById("message").innerText = "Simplify something first.";
+        return;
+    }
+
+    if (index < sentences.length - 1) {
+        index++;
+        updateSentence();
+    }
+}
+
+function prevSentence() {
+    if (sentences.length === 0) {
+        document.getElementById("message").innerText = "Simplify something first.";
+        return;
+    }
+
+    if (index > 0) {
+        index--;
+        updateSentence();
     }
 }
 
@@ -108,7 +191,6 @@ function toggleSpacing() {
 function toggleCalmMode() {
     document.body.classList.toggle("calm-mode");
 }
-
 
 function toggleReadingRuler() {
     const ruler = document.getElementById("readingRuler");
