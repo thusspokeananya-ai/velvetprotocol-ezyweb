@@ -9,44 +9,47 @@
 
 <div id="readingRuler"></div>
 
-<header class="hero">
-    <h1>Ezy Web Accessibility Tool</h1>
+<div class="hero-card">
+    <h1>🐙 EzyWeb</h1>
 
     <p class="tagline">
         Helping people with ADHD, autism, and dyslexia read and focus more easily.
     </p>
 
-    <p class="subtitle">
-        Paste any website link and get a simpler, calmer, and easier-to-read version.
-    </p>
-</header>
+    <input type="text" id="urlInput" placeholder="Paste any website URL here">
+    <button class="main-btn" onclick="processLink()">Simplify Website</button>
+</div>
 
 <div class="features">
-    <div class="feature-card">🧠 ADHD Focus Mode</div>
-    <div class="feature-card">📖 Dyslexia-Friendly Spacing</div>
-    <div class="feature-card">🌿 Autism Calm Mode</div>
-    <div class="feature-card">🔊 Read Aloud Support</div>
+    <div class="feature-card">🧠 Focus Support</div>
+    <div class="feature-card">📖 Easy Reading</div>
+    <div class="feature-card">🌿 Calm UI</div>
+    <div class="feature-card">🔊 Audio Assist</div>
 </div>
 
-<div class="search-area">
-    <input type="text" id="urlInput" placeholder="Paste URL here">
-    <button onclick="processLink()">Submit</button>
-</div>
+<div class="dropdowns">
 
-<div class="buttons">
-    <button onclick="increaseFont()">A+</button>
-    <button onclick="decreaseFont()">A-</button>
-    <button onclick="toggleDark()">Dark Mode</button>
-    <button onclick="readText()">Read Aloud</button>
-    <button onclick="stopReading()">Stop Reading</button>
-    <button onclick="copySimplifiedText()">Copy Simplified Text</button>
+    <details>
+        <summary>📖 Reading Tools</summary>
+        <button onclick="increaseFont()">A+</button>
+        <button onclick="decreaseFont()">A-</button>
+        <button onclick="readText()">🔊 Read</button>
+        <button onclick="stopReading()">⛔ Stop</button>
+    </details>
 
-    <button onclick="toggleBigCursor()">Big Cursor</button>
-    <button onclick="toggleFocusMode()">Focus Mode</button>
-    <button onclick="toggleReadingRuler()">Reading Ruler</button>
-    <button onclick="toggleSpacing()">Readable Spacing</button>
-    <button onclick="toggleCalmMode()">Calm Mode</button>
-    <button onclick="toggleCognitiveMode()">Cognitive Mode</button>
+    <details>
+        <summary>🎯 Focus Tools</summary>
+        <button onclick="toggleFocusMode()">Focus Mode</button>
+        <button onclick="toggleReadingRuler()">Reading Ruler</button>
+    </details>
+
+    <details>
+        <summary>🎨 Display Modes</summary>
+        <button onclick="toggleDark()">Dark Mode</button>
+        <button onclick="toggleSpacing()">Readable Spacing</button>
+        <button onclick="toggleCalmMode()">Calm Mode</button>
+            </details>
+
 </div>
 
 <div id="loading" class="loading"></div>
@@ -57,17 +60,21 @@
 </div>
 
 <div class="box simple-section">
-    <h3>Simplified Version:</h3>
-    <div id="simpleText"></div>
+    <div class="section-heading">
+        <h3>Simplified Version:</h3>
+        <button class="copy-icon" onclick="copySimplifiedText()" title="Copy simplified text">📋</button>
+    </div>
+
+    <div id="simpleText">Your simplified text will appear here...</div>
 </div>
 
 <div class="box original-section">
-    <h3>Original Text:</h3>
+    <h3>Original Text</h3>
     <p id="text"></p>
 </div>
 
 <footer>
-    Made to support people with ADHD, autism, dyslexia, and cognitive accessibility needs.
+    EzyWeb • Built for cognitive accessibility
 </footer>
 
 <script src="script.js"></script>
