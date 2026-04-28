@@ -19,7 +19,7 @@ async function processLink() {
     document.getElementById("progressBar").style.width = "0%";
 
     try {
-        const response = await fetch("http://localhost:3000/process-link", {
+        const response = await fetch("https://your-vercel-project.vercel.app/process-link"), {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
