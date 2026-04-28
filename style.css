@@ -32,7 +32,7 @@ button {
     border-radius: 8px;
     background-color:#488c98;
     color: rgb(0, 5, 7);
-    cursor: pointer;
+    cursor: pointer; 
 }
 
 button:hover {
@@ -40,7 +40,7 @@ button:hover {
 }
 
 .box {
-    border: 1px solid #ffffff;
+    border: 1px solid #000000;
     padding: 20px;
     margin-top: 20px;
     border-radius: 10px;
