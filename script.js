@@ -1,62 +1,35 @@
-// ===============================
-// 1. INCREASE FONT SIZE
-// ===============================
 function increaseFont() {
     let body = document.body;
     let currentSize = window.getComputedStyle(body).fontSize;
-    let newSize = parseFloat(currentSize) + 2;
-    body.style.fontSize = newSize + "px";
+    body.style.fontSize = (parseFloat(currentSize) + 2) + "px";
 }
 
-
-// ===============================
-// 2. DECREASE FONT SIZE
-// ===============================
 function decreaseFont() {
     let body = document.body;
     let currentSize = window.getComputedStyle(body).fontSize;
-    let newSize = parseFloat(currentSize) - 2;
-    body.style.fontSize = newSize + "px";
+    body.style.fontSize = (parseFloat(currentSize) - 2) + "px";
 }
 
-
-// ===============================
-// 3. DARK MODE
-// ===============================
 function toggleDark() {
     document.body.classList.toggle("dark");
 }
 
-
-// ===============================
-// 4. READ ALOUD (TEXT TO SPEECH)
-// ===============================
 function readText() {
     const text = document.getElementById("text").innerText;
-
     const speech = new SpeechSynthesisUtterance(text);
-    speech.rate = 0.9;  // slower for elderly users
-    speech.pitch = 1;
-
+    speech.rate = 0.9;
     window.speechSynthesis.speak(speech);
 }
 
-<<<<<<< HEAD
-function simplifyText() {
-    document.getElementById("simpleText").innerText =
-    "Government websites are often difficult. EasyWeb makes them simpler to understand.";
-}
-=======
-
 // ===============================
-// 5. PROCESS LINK (CONNECT TO BACKEND)
+// PROCESS LINK
 // ===============================
 async function processLink() {
 
     const url = document.getElementById("urlInput").value;
 
     if (!url) {
-        alert("Please enter a URL");
+        alert("Enter a URL");
         return;
     }
 
@@ -71,13 +44,14 @@ async function processLink() {
 
         const data = await response.json();
 
+        // SHOW ORIGINAL TEXT
         document.getElementById("text").innerText = data.text;
-document.getElementById("simpleText").innerText = data.simplified;
 
+        // SHOW BULLETS (IMPORTANT: innerHTML)
+        document.getElementById("simpleText").innerHTML = data.simplified;
 
     } catch (error) {
-        alert("Error fetching website");
+        alert("Error");
         console.error(error);
     }
 }
->>>>>>> c7f74c2797640e4f3c9f13f7cb32b446b082ff14
