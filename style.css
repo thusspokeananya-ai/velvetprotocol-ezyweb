@@ -3,8 +3,8 @@ body {
     font-size: 16px;
     line-height: 1.6;
     padding: 40px;
-    background-color: #F5F5F5;
-    color: #1A1A1A;
+    background-color: #ededed;
+    color: #69adc2;
     text-align: center;
 }
 
@@ -14,7 +14,7 @@ button {
 }
 
 h1 {
-    color: #1A1A1A;
+    color: #2d5854;
 }
 
 .intro {
@@ -30,17 +30,17 @@ button {
     margin: 8px;
     border: none;
     border-radius: 8px;
-    background-color:#70a1bd;
+    background-color:#488c98;
     color: rgb(0, 5, 7);
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #fffffffa;
 }
 
 .box {
-    border: 1px solid #ddd;
+    border: 1px solid #ffffff;
     padding: 20px;
     margin-top: 20px;
     border-radius: 10px;
