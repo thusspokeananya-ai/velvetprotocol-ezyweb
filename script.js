@@ -11,8 +11,9 @@ async function processLink() {
         return;
     }
 
-    loading.innerText = "Simplifying page...";
+    loading.innerText = "Simplifying...";
     message.innerText = "";
+
     document.getElementById("simpleText").innerHTML = "";
     document.getElementById("text").innerText = "";
     document.getElementById("progressBar").style.width = "0%";
@@ -23,7 +24,7 @@ async function processLink() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ url: url })
+            body: JSON.stringify({ url })
         });
 
         const data = await response.json();
@@ -38,7 +39,7 @@ async function processLink() {
         document.getElementById("simpleText").innerHTML = data.simplified;
         document.getElementById("text").innerText = data.text;
 
-        updateProgressBar();
+        document.getElementById("progressBar").style.width = "100%";
 
     } catch (error) {
         loading.innerText = "";
@@ -64,14 +65,14 @@ function toggleDark() {
 }
 
 function readText() {
-    const simpleText = document.getElementById("simpleText").innerText;
+    const text = document.getElementById("simpleText").innerText;
 
-    if (simpleText.trim() === "") {
-        document.getElementById("message").innerText = "There is no text to read yet.";
+    if (text.trim() === "" || text.includes("Your simplified text will appear here")) {
+        document.getElementById("message").innerText = "There is no simplified text to read yet.";
         return;
     }
 
-    const speech = new SpeechSynthesisUtterance(simpleText);
+    const speech = new SpeechSynthesisUtterance(text);
     speech.rate = 0.8;
     speech.pitch = 1;
     speech.volume = 1;
@@ -87,17 +88,13 @@ function stopReading() {
 function copySimplifiedText() {
     const text = document.getElementById("simpleText").innerText;
 
-    if (text.trim() === "") {
+    if (text.trim() === "" || text.includes("Your simplified text will appear here")) {
         document.getElementById("message").innerText = "There is no simplified text to copy yet.";
         return;
     }
 
     navigator.clipboard.writeText(text);
     document.getElementById("message").innerText = "Simplified text copied!";
-}
-
-function toggleBigCursor() {
-    document.body.classList.toggle("big-cursor");
 }
 
 function toggleFocusMode() {
@@ -112,15 +109,10 @@ function toggleCalmMode() {
     document.body.classList.toggle("calm-mode");
 }
 
-function toggleCognitiveMode() {
-    document.body.classList.toggle("cognitive-mode");
-    document.body.classList.toggle("big-cursor");
-    document.body.classList.toggle("readable-spacing");
-    document.body.classList.toggle("focus-mode");
-}
 
 function toggleReadingRuler() {
     const ruler = document.getElementById("readingRuler");
+
     readingRulerOn = !readingRulerOn;
 
     if (readingRulerOn) {
@@ -137,8 +129,3 @@ document.addEventListener("mousemove", function(event) {
         ruler.style.top = event.clientY + "px";
     }
 });
-
-function updateProgressBar() {
-    const progressBar = document.getElementById("progressBar");
-    progressBar.style.width = "100%";
-}
