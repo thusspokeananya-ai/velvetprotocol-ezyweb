@@ -112,4 +112,6 @@ app.post("/process", upload.single("image"), async (req, res) => {
     }
 });
 
-module.exports = (req, res) => app(req, res);
+app.listen(3000, () => {
+    console.log("Server running at http://localhost:3000");
+});
